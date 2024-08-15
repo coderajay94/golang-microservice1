@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-//type Middleware func(s Service) Service
+type Middleware func(s Service) Service
 
 type Service interface {
 	GetAccountDetails(ctx context.Context, req model.UserRequest) (model.UserResponse, error)

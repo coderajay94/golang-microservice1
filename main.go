@@ -42,6 +42,7 @@ func main() {
 	var s base.Service
 	{
 		s = base.NewService(logger, QueryLimit)
+		s = base.NewLoggingMiddleware(logger)(s)
 	}
 	endpoints := base.MakeServerEndpoints(s)
 
