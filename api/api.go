@@ -23,7 +23,7 @@ func InitMemoryUserAccounts() MemoryUserAccounts{
 
 //store
 func (m MemoryUserAccounts) StoreUserAccounts(){
-	m.AllUserAccounts.Set("ajaykumar@gmail.com", model.UserResponse{
+	m.AllUserAccounts.Set("ajaykumar@gmail.com", model.UserResponseDB{
 		Email : "ajaykumar@gmail.com",
 		Name : "ajaykumar",
 		Balance: 123455.33,
@@ -31,7 +31,7 @@ func (m MemoryUserAccounts) StoreUserAccounts(){
 
 	})
 
-	m.AllUserAccounts.Set("raghu@gmail.com", model.UserResponse{
+	m.AllUserAccounts.Set("raghu@gmail.com", model.UserResponseDB{
 		Email : "raghu@gmail.com",
 		Name : "raghu",
 		Balance: 3455.33,
@@ -41,13 +41,13 @@ func (m MemoryUserAccounts) StoreUserAccounts(){
 	fmt.Println(m.AllUserAccounts)
 }
 
-func (m MemoryUserAccounts) GetAccountDetails(req model.UserRequest) (model.UserResponse, error) {
+func (m MemoryUserAccounts) GetAccountDetails(req model.UserRequestDB) (model.UserResponseDB, error) {
 	  user, found := m.AllUserAccounts.Get(req.Email)
 	count :=  m.AllUserAccounts.Count()
 	  fmt.Println("if user found:", found, count)
 	if found{
-		userRes, _ := user.(model.UserResponse)
+		userRes, _ := user.(model.UserResponseDB)
 		return userRes, nil
 	}
-	return model.UserResponse{}, nil
+	return model.UserResponseDB{}, nil
 }

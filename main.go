@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/coderajay94/microservice1/base"
+	"github.com/coderajay94/microservice1/db"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 )
@@ -39,9 +41,18 @@ func main() {
 		logger.Panic("failed to load environment variables, aborting service initialization..")
 	}
 
+	var dbService db.MongoDatabase
+	{
+		dbService, err = db.NewClient("localhost:27017", "admin","admin","employees", "accounts")
+		if err != nil {
+			logger.Fatal("error in creating database connection")
+			fmt.Println(err)
+		}
+	}
+
 	var s base.Service
 	{
-		s = base.NewService(logger, QueryLimit)
+		s = base.NewService(logger,dbService, QueryLimit)
 		s = base.NewLoggingMiddleware(logger)(s)
 	}
 	endpoints := base.MakeServerEndpoints(s)

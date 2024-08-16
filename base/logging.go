@@ -23,7 +23,7 @@ type loggingMiddleware struct {
 	logger *zap.Logger
 }
 
-func (mw loggingMiddleware) GetAccountDetails(ctx context.Context, req model.UserRequest)(res model.UserResponse, err error){
+func (mw loggingMiddleware) GetAccountDetails(ctx context.Context, req model.UserRequestDB)(res model.UserResponseDB, err error){
 
 	defer func(begin time.Time){
 		if err != nil{

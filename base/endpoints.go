@@ -20,7 +20,7 @@ func MakeServerEndpoints(s Service) Endpoints {
 
 func MakeAccountDetails(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req, ok := request.(model.UserRequest)
+		req, ok := request.(model.UserRequestDB)
 		if !ok {
 			return nil, errors.New("Invalid request")
 		}

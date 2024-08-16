@@ -37,7 +37,7 @@ func endcodeResponsAaccountDetails(_ context.Context, w http.ResponseWriter, res
 }
 
 func decodeRequestAccountDetails(_ context.Context, r *http.Request) (request interface{}, err error) {
-	var req model.UserRequest
+	var req model.UserRequestDB
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, err
 	}
