@@ -37,3 +37,18 @@ func (mw loggingMiddleware) GetAccountDetails(ctx context.Context, req model.Use
 
 	return mw.next.GetAccountDetails(ctx, req)
 }
+
+func (mw loggingMiddleware) SaveAccountDetails(ctx context.Context, req model.UserResponseDB)(res model.SaveResponseDB, err error){
+
+	defer func(begin time.Time){
+		if err != nil{
+			zap.Int64("timeTaken:", int64(time.Since(begin)))
+			mw.logger.Error("Encounterd error processing request")
+			mw.logger.Error(err.Error())
+		}
+		mw.logger.Info("able to pass through logging SaveAccountDetails")
+		mw.logger.Info("get details for email:"+ req.Email)
+	}(time.Now())
+
+	return mw.next.SaveAccountDetails(ctx, req)
+}

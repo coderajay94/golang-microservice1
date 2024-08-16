@@ -24,6 +24,11 @@ func MakeHttpHandler(e Endpoints, basepath string) http.Handler {
 				decodeRequestAccountDetails,
 				endcodeResponsAaccountDetails,
 			))
+			r.Method(http.MethodPost, "/saveAccountDetails", httptransport.NewServer(
+				e.SaveAccountDetails,
+				decodeRequestSaveAccountDetails,
+				endcodeResponsAaccountDetails,
+			))
 		})
 	})
 
@@ -36,8 +41,17 @@ func endcodeResponsAaccountDetails(_ context.Context, w http.ResponseWriter, res
 	return json.NewEncoder(w).Encode(response)
 }
 
+
 func decodeRequestAccountDetails(_ context.Context, r *http.Request) (request interface{}, err error) {
 	var req model.UserRequestDB
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+func decodeRequestSaveAccountDetails(_ context.Context, r *http.Request) (request interface{}, err error) {
+	var req model.UserResponseDB
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, err
 	}

@@ -10,11 +10,13 @@ import (
 
 type Endpoints struct {
 	AccountDetails endpoint.Endpoint
+	SaveAccountDetails endpoint.Endpoint
 }
 
 func MakeServerEndpoints(s Service) Endpoints {
 	return Endpoints{
 		AccountDetails: MakeAccountDetails(s),
+		SaveAccountDetails: SaveAccountDetails(s),
 	}
 }
 
@@ -25,5 +27,15 @@ func MakeAccountDetails(s Service) endpoint.Endpoint {
 			return nil, errors.New("Invalid request")
 		}
 		return s.GetAccountDetails(ctx, req)
+	}
+}
+
+func SaveAccountDetails(s Service) endpoint.Endpoint{
+	return func(ctx context.Context, request interface{})(response interface{}, err error){
+		req, ok := request.(model.UserResponseDB)
+		if !ok {
+			return nil, errors.New("Invalid request")
+		}
+		return s.SaveAccountDetails(ctx, req)
 	}
 }

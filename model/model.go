@@ -12,12 +12,16 @@ package model
 // }
 
 type UserRequestDB struct {
-	Email string `bson:"_id,omitempty" json:"email"`
+	Email string `bson:"email,omitempty" json:"email"`
 }
 
 type UserResponseDB struct {
-	Email         string  `bson:"_id,omitempty" json:"email"`
+	Email         string  `bson:"email,omitempty" json:"email"`
 	Name          string  `bson:"name" json:"name"`
 	Balance       float64 `bson:"balance" json:"balance"`
 	AccountNumber string  `bson:"accountNumber" json:"accountNumber"`
+}
+
+type SaveResponseDB struct {
+	Status string `json:"status"`
 }

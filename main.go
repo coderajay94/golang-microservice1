@@ -54,6 +54,7 @@ func main() {
 	{
 		s = base.NewService(logger,dbService, QueryLimit)
 		s = base.NewLoggingMiddleware(logger)(s)
+		fmt.Println("service & middleware object intitalized")
 	}
 	endpoints := base.MakeServerEndpoints(s)
 
